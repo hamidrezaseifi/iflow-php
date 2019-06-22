@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\modules\RestTemplate;
 
 class SiteController extends Controller
 {
@@ -26,7 +27,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login'],
+                        'actions' => ['login', 'test'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -142,6 +143,14 @@ class SiteController extends Controller
     
     public function actionTest()
     {
+        $rest = new RestTemplate();
+        
+        $res = $rest->getData("http://localhost:1010/users/readbyemail/admin@iflow.de");
+        
+        $output = json_decode($res);
+        
+        print_r($output); exit;
+        
         return $this->render('test');
     }
 }
