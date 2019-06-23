@@ -143,13 +143,7 @@ class SiteController extends Controller
     
     public function actionTest()
     {
-        $rest = new RestTemplate();
         
-        $res = $rest->getData("http://localhost:1010/users/readbyemail/admin@iflow.de");
-        
-        $output = json_decode($res);
-        
-        print_r($output); exit;
         
         return $this->render('test');
     }

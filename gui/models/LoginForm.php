@@ -62,16 +62,26 @@ class LoginForm extends Model
     {
         $rest = new RestTemplate();
         
-        $user = ["email" => $this->username, "password" => $this->password, 'companyIdentity' => ''];
-        
-        $res = $rest->postData(\Yii::$app->params['services']['profile']['urls']['auth'], $user);
+        $user = ["email" => $this->username, "password" => $this->password, "companyIdentity" => ''];
+        $url = \Yii::$app->params['services']['profile']['urls']['auth'];
+        $res = $rest->postData($url, $user);
         
         $output = json_decode($res);
         
-        //print_r($output) ; exit;
+       //print_r($output) ; exit; 
         
-        if (isset($output->sessionid) && isset($output->user) && isset($output->company)) {
-            $logedUser = new IdentityUser($output->user, $output->company, $output->token, $output->sessionid);
+        if (isset($output->sessionid)) {
+            
+            $res = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username . '?produces=json');
+            $user = json_decode($res);
+            
+            $res = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user->companyId . '?produces=json');
+            $company = json_decode($res);
+            //print_r($company) ; exit; 
+           
+          
+            //&& isset($output->user) && isset($output->company)
+            $logedUser = new IdentityUser($user, $company, $output->token, $output->sessionid);
             \Yii::$app->session['logedInfo'] = ['user' => $logedUser, ];
             return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
             
