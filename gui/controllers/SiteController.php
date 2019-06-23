@@ -27,7 +27,7 @@ class SiteController extends Controller
                         'roles' => ['@'],
                     ],
                     [
-                        'actions' => ['login', 'test', 'test'],
+                        'actions' => ['login', 'test'],
                         'allow' => true,
                         'roles' => ['?'],
                     ],
@@ -143,15 +143,6 @@ class SiteController extends Controller
     
     public function actionTest()
     {
-        $rest = new RestTemplate();
-        
-        $res = $rest->getData("http://localhost:1010/companies/readbyid/1?produces=json");
-        
-        echo $res . '<br><br><hr><br>';
-        
-        $res = $rest->getData("http://localhost:1010/users/readbyemail/admin@iflow.de?produces=json");
-        
-        echo $res; exit;
         
         
         return $this->render('test');
