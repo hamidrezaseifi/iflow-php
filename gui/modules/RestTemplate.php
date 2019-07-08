@@ -3,7 +3,7 @@ namespace app\modules;
 
 class RestTemplate
 {
-    private const PRODUCE_JSON_PART = 'produces=json';
+    const PRODUCE_JSON_PART = 'produces=json';
     
     function postData($url, $data) {
         
@@ -55,7 +55,13 @@ class RestTemplate
     
     private function prepareHeader($isPost, $jsonData) {
         
-        $header = array('iflow-inner-module: inner-module', 'iftkid: notloged', );
+        $token = 'not-logged';
+        if(isset($_SESSION['logedInfo']) && isset($_SESSION['logedInfo']['user'])){
+            $logged = $_SESSION['logedInfo']['user'];
+            $token = $logged->getAccessToken();
+        }
+        
+        $header = array('IFLOW-CLIENT-ID: iflow-inner-module', 'iftkid: ' . $token, );
         
         if($isPost){
             $header = array_merge($header, array('Content-Type: application/json', "Content-length: ".strlen($jsonData)));
