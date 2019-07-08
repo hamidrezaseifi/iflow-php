@@ -45,9 +45,9 @@ class RestTemplate
         $urlLower = strtolower($url);
         $urlTemp = $url;
         
-        if(!strpos($urlLower, RestTemplate::PRODUCE_JSON_PART)){
+        if(!strpos($urlLower, self::PRODUCE_JSON_PART)){
             $urlTemp .= !strpos($urlLower, '?') ? '?' : '&';
-            $urlTemp .= RestTemplate::PRODUCE_JSON_PART;
+            $urlTemp .= self::PRODUCE_JSON_PART;
         }
         
         return $urlTemp;

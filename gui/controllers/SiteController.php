@@ -144,7 +144,6 @@ class SiteController extends Controller
     public function actionTest()
     {
         
-        
         return $this->render('test');
     }
     
@@ -163,6 +162,6 @@ class SiteController extends Controller
         
         $output = json_decode($res);
         //print_r($output) ; exit; 
-        return $this->render('testreadlist',['typs'=>$output]);
+        return $this->render('testreadlist',['types' => $output]);
     }
 }

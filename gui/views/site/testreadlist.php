@@ -12,12 +12,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
  
 <?php
-if (count($typs)) {
+if (count($types)) {
     // Open the table
     echo "<table border='1'><tr><td>id</td><td>title</td></tr>";
     
     // Cycle through the array
-    foreach ($typs as $idx => $type) {
+    foreach ($types as $idx => $type) {
         
         // Output a row
         echo "<tr>";
