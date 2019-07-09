@@ -18,11 +18,11 @@ if (count($types)) {
     
     // Cycle through the array
     foreach ($types as $idx => $type) {
-        
+        //print_r($type)
         // Output a row
         echo "<tr>";
-        echo "<td>".$type->id."</td>";
-        echo "<td>".$type->title."</td>";
+        echo "<td>".$type['id']."</td>";
+        echo "<td>".$type['title']."</td>";
         echo "</tr>";
     }
     

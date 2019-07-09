@@ -64,26 +64,24 @@ class LoginForm extends Model
         
         $user = ["email" => $this->username, "password" => $this->password, "companyIdentity" => ''];
         $url = \Yii::$app->params['services']['profile']['urls']['auth'];
-        $res = $rest->postData($url, $user);
-        
-        $output = json_decode($res);
+        $output = $rest->postData($url, $user);
         
        //print_r($output) ; exit; 
         
-        if (isset($output->sessionid)) {
+        if (isset($output['sessionid'])) {
             
-            $res = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username . '?produces=json');
-            $user = json_decode($res);
-            
-            $res = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user->companyId . '?produces=json');
-            $company = json_decode($res);
-            //print_r($company) ; exit; 
-           
+            $user = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username);
+
+            if(is_array($user) && isset($user['companyId'])){
+                $company = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user['companyId']);
+                //print_r($company) ; exit; 
+                $logedUser = new IdentityUser($user, $company, $output['token'], $output['sessionid']);
+                \Yii::$app->session['logedInfo'] = ['user' => $logedUser, ];
+                return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
+            }
           
-            //&& isset($output->user) && isset($output->company)
-            $logedUser = new IdentityUser($user, $company, $output->token, $output->sessionid);
-            \Yii::$app->session['logedInfo'] = ['user' => $logedUser, ];
-            return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
+            
+            
             
         }
         return false;

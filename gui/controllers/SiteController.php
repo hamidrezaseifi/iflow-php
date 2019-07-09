@@ -11,6 +11,9 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\modules\RestTemplate;
 
+require_once 'XML/Serializer.php';
+
+
 class SiteController extends Controller
 {
     /**
@@ -144,6 +147,78 @@ class SiteController extends Controller
     public function actionTest()
     {
         
+        //$serializer = new XML_Serializer($options);
+        
+        //$result = $serializer->serialize(['a' => 1, 'b' => 2, 'c' => 3, 'd' => 4, ]);
+        
+        $result = simplexml_load_string("<WorkflowEdo>
+   <id>3</id>
+   <workflowTypeId>1</workflowTypeId>
+   <currentStep>1</currentStep>
+   <controller>1</controller>
+   <createdBy>1</createdBy>
+   <title>New Workflow from type 1</title>
+   <comments>kommentar 1</comments>
+   <status>1</status>
+   <version>2</version>
+   <files>
+      <files>
+         <id>2</id>
+         <workflowId>3</workflowId>
+         <createdBy>1</createdBy>
+         <title>New file for Workflow 2</title>
+         <activeFilePath>path/to/new/file2</activeFilePath>
+         <comments>kommentar 2</comments>
+         <activeFileVersion>1</activeFileVersion>
+         <status>1</status>
+         <version>0</version>
+         <fileVersions/>
+      </files>
+      <files>
+         <id>1</id>
+         <workflowId>3</workflowId>
+         <createdBy>1</createdBy>
+         <title>New file for Workflow 1</title>
+         <activeFilePath>path/to/new/file1</activeFilePath>
+         <comments>kommentar 1</comments>
+         <activeFileVersion>1</activeFileVersion>
+         <status>1</status>
+         <version>2</version>
+         <fileVersions/>
+      </files>
+      <files>
+         <id>3</id>
+         <workflowId>3</workflowId>
+         <createdBy>1</createdBy>
+         <title>New file for Workflow 3</title>
+         <activeFilePath>path/to/new/file3</activeFilePath>
+         <comments>kommentar 3</comments>
+         <activeFileVersion>1</activeFileVersion>
+         <status>1</status>
+         <version>2</version>
+         <fileVersions/>
+      </files>
+   </files>
+   <actions>
+      <actions>
+         <id>1</id>
+         <workflowId>3</workflowId>
+         <createdBy>1</createdBy>
+         <action>New action for Workflow 1</action>
+         <oldStep>1</oldStep>
+         <newStep>2</newStep>
+         <comments>kommentar 1</comments>
+         <status>1</status>
+         <version>2</version>
+      </actions>
+   </actions>
+</WorkflowEdo>");
+        
+        $json = json_encode($result);
+        $array = json_decode($json,TRUE);
+        
+        print_r($array); exit;
+        
         return $this->render('test');
     }
     
@@ -158,10 +233,12 @@ class SiteController extends Controller
         $rest = new RestTemplate();
         
      
-        $res = $rest->getData($url);
+        $output = $rest->getData($url);
         
-        $output = json_decode($res);
         //print_r($output) ; exit; 
+        
+        $output = isset($output["item"]) ? $output["item"] : $output;
+        
         return $this->render('testreadlist',['types' => $output]);
     }
 }

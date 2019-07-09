@@ -20,10 +20,11 @@ class RestTemplate
         $output = curl_exec($ch);
         curl_close($ch);
         
-        //echo $output;
+        $array = $this->resultAsArray($output);
         
-        return $output;
+        return $array;
     }
+
     
     function getData($url) {
         
@@ -36,19 +37,19 @@ class RestTemplate
         $output = curl_exec($ch);
         curl_close($ch);
         
-        //echo $output;
+        $array = $this->resultAsArray($output);
         
-        return $output;
+        return $array;
     }
     
     private function prepareUrl($url) {
         $urlLower = strtolower($url);
         $urlTemp = $url;
         
-        if(!strpos($urlLower, self::PRODUCE_JSON_PART)){
+        /*if(!strpos($urlLower, self::PRODUCE_JSON_PART)){
             $urlTemp .= !strpos($urlLower, '?') ? '?' : '&';
             $urlTemp .= self::PRODUCE_JSON_PART;
-        }
+        }*/
         
         return $urlTemp;
     }
@@ -68,6 +69,22 @@ class RestTemplate
         }
         
         return $header;
+    }
+    
+    private function resultAsArray($output)
+    {
+        $array = false;
+        
+        if($output && strlen($output) > 5){
+            
+            //print_r($output); exit;
+            $result = simplexml_load_string($output);
+            
+            $json = json_encode($result);
+            $array = json_decode($json,TRUE);
+        }
+        
+        return $array;
     }
 }
 
