@@ -144,7 +144,24 @@ class SiteController extends Controller
     public function actionTest()
     {
         
-        
         return $this->render('test');
+    }
+    
+    public function actionTestreadlist()
+    {
+       
+        $log=$_SESSION['logedInfo'];
+        $CompId=$log['user']->getCompany()->getId();
+        
+        $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
+        //print_r($url) ; exit; 
+        $rest = new RestTemplate();
+        
+     
+        $res = $rest->getData($url);
+        
+        $output = json_decode($res);
+        //print_r($output) ; exit; 
+        return $this->render('testreadlist',['types' => $output]);
     }
 }
