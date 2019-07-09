@@ -153,7 +153,7 @@ class SiteController extends Controller
         $log=$_SESSION['logedInfo'];
         $CompId=$log['user']->getCompany()->getId();
         
-        $url="http://localhost:1010/workflowtype/company/list/".$CompId;
+        $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
         //print_r($url) ; exit; 
         $rest = new RestTemplate();
         

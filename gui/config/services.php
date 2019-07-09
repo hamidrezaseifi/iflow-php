@@ -6,6 +6,11 @@ return [
             'auth' => 'http://localhost:1020/auth/authenticate?produces=json',
         ],
     ],
+    'workflow' => [
+        'urls' => [
+            'workflowtype-list' => 'http://localhost:1030/workflowtype/company/list/',
+        ],
+    ],
     'core' => [
         'urls' => [
             'readuserbyid' => 'http://localhost:1010/users/readbyid/',
