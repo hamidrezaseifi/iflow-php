@@ -21,8 +21,8 @@ if (count($types)) {
         //print_r($type)
         // Output a row
         echo "<tr>";
-        echo "<td>".$type['id']."</td>";
-        echo "<td>".$type['title']."</td>";
+        echo "<td>".$type['ID']."</td>";
+        echo "<td>".$type['Title']."</td>";
         echo "</tr>";
     }
     

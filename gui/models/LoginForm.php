@@ -62,20 +62,20 @@ class LoginForm extends Model
     {
         $rest = new RestTemplate();
         
-        $user = ["email" => $this->username, "password" => $this->password, "companyIdentity" => ''];
+        $user = ["Email" => $this->username, "Password" => $this->password, "CompanyIdentity" => ''];
         $url = \Yii::$app->params['services']['profile']['urls']['auth'];
         $output = $rest->postData($url, $user);
         
        //print_r($output) ; exit; 
         
-        if (isset($output['sessionid'])) {
+        if (isset($output['SessionId'])) {
             
             $user = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username);
-
-            if(is_array($user) && isset($user['companyId'])){
-                $company = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user['companyId']);
+            
+            if(is_array($user) && isset($user['CompanyId'])){
+                $company = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user['CompanyId']);
                 //print_r($company) ; exit; 
-                $logedUser = new IdentityUser($user, $company, $output['token'], $output['sessionid']);
+                $logedUser = new IdentityUser($user, $company, $output['Token'], $output['SessionId']);
                 \Yii::$app->session['logedInfo'] = ['user' => $logedUser, ];
                 return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
             }
