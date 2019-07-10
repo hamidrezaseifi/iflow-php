@@ -109,7 +109,7 @@ class SiteController extends Controller
      */
     public function actionLogout()
     {
-        unset(\Yii::$app->session['logedInfo']);
+        unset($_SESSION['logedInfo']);
         Yii::$app->user->logout();
 
         return $this->goHome();

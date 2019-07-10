@@ -62,26 +62,35 @@ class LoginForm extends Model
     {
         $rest = new RestTemplate();
         
-        $user = ["email" => $this->username, "password" => $this->password, "companyIdentity" => ''];
+        $request = ["email" => $this->username, "password" => $this->password, "companyIdentity" => ''];
         $url = \Yii::$app->params['services']['profile']['urls']['auth'];
-        $output = $rest->postData($url, $user);
+        $output = $rest->postData($url, $request);
         
-       //print_r($output) ; exit; 
+     // print_r($output) ; exit; 
         
         if (isset($output['sessionid'])) {
             
-            $user = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username);
+            $_SESSION['logedInfo'] = ['token' => $output['token'], 'sessionid' => $output['sessionid'], ];
+            
+            $email = ["email" => $output['email'], "token"=>$output['token']];
+           //print_r($email) ; exit; 
+            $url= "http://localhost:1020/profile/read/authinfo";
+            $profile=$rest->postData($url, $email);
+            
+             print_r($profile) ; exit; 
+           
+          // $user = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username);
 
-            if(is_array($user) && isset($user['companyId'])){
-                $company = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user['companyId']);
+            if(is_array($request) && isset($request['companyId'])){
+               // $company = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user['companyId']);
                 //print_r($company) ; exit; 
+                $user = ?;
+                $company = ?;
+                
                 $logedUser = new IdentityUser($user, $company, $output['token'], $output['sessionid']);
-                \Yii::$app->session['logedInfo'] = ['user' => $logedUser, ];
+                $_SESSION['logedInfo']['user'] = $logedUser;
                 return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
             }
-          
-            
-            
             
         }
         return false;
