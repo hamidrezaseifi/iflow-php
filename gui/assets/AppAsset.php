@@ -18,14 +18,28 @@ use yii\web\AssetBundle;
 class AppAsset extends AssetBundle
 {
     public $basePath = '@webroot';
-    public $baseUrl = '@web';
+    public $baseUrl = '@web/web';
+    
     public $css = [
         'css/site.css',
+        'angular/angular-material.min.css',
     ];
     public $js = [
+        'js/jquery-3.4.1.js',
+        'angular/angular.js',
+        'angular/angular-animate.js',
+        'angular/angular-aria.min.js',
+        'angular/angular-messages.min.js',
+        'angular/angular-material.min.js',
+        'angular/angular-cookies.min.js',
+        'js/main.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
+        
     ];
+    
+    public $jsOptions = [
+        'position' => 1
+    ];
+    
 }

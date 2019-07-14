@@ -16,12 +16,12 @@ class LoggedUser extends Model
     
     public function __construct($config)
     {
-        $this->id = $config['id'];
-        $this->email = $config['email'];
-        $this->firstName = $config['firstName'];
-        $this->lastName = $config['lastName'];
-        $this->status = $config['status'];
-        $this->permission = $config['permission'];
+        $this->id = $config['ID'];
+        $this->email = $config['Email'];
+        $this->firstName = $config['FirstName'];
+        $this->lastName = $config['LastName'];
+        $this->status = $config['Status'];
+        $this->permission = $config['Permission'];
     }
     
     

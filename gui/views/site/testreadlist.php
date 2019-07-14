@@ -21,8 +21,8 @@ if (count($types)) {
         //print_r($type)
         // Output a row
         echo "<tr>";
-        echo "<td>".$type['id']."</td>";
-        echo "<td>".$type['title']."</td>";
+        echo "<td>".$type['ID']."</td>";
+        echo "<td>".$type['Title']."</td>";
         echo "</tr>";
     }
     
@@ -43,7 +43,7 @@ echo '<hr>';
   <option selected="selected" value="0">Choose one</option>
   <?php
   foreach($types as  $idx => $type) { ?>
-      <option value="<?= $type['id'] ?>"><?= $type['title'] ?></option>
+      <option value="<?= $type['ID'] ?>"><?= $type['Title'] ?></option>
   <?php
     } ?>
 </select>   

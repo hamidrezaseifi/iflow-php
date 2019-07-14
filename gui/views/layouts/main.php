@@ -15,7 +15,7 @@ AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
-<html lang="<?= Yii::$app->language ?>">
+<html lang="<?= Yii::$app->language ?>" ng-app="iflowApp">
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,7 +24,7 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body ng-controller="BodyController">
 <?php $this->beginBody() ?>
 
 <div class="wrap">
@@ -39,6 +39,7 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
+            ['label' => 'Workflow Types', 'url' => ['/site/workflowtypes']],
             ['label' => 'TestReadList', 'url' => ['/site/testreadlist']],
             ['label' => 'Test', 'url' => ['/site/test']],
              ['label' => 'Home', 'url' => ['/site/index']],

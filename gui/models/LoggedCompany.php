@@ -46,10 +46,10 @@ class LoggedCompany extends Model
 
     public function __construct($config)
     {
-        $this->id = $config['id'];
-        $this->companyName = $config['companyName'];
-        $this->identifiyId = $config['identifyid'];
-        $this->status = $config['status'];
+        $this->id = $config['ID'];
+        $this->companyName = $config['CompanyName'];
+        $this->identifiyId = $config['IdentifyId'];
+        $this->status = $config['Status'];
     }
     
     

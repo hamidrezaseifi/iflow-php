@@ -153,21 +153,50 @@ class SiteController extends Controller
     
     public function actionTestreadlist()
     {
-       
+        
         $log=$_SESSION['logedInfo'];
         $CompId=$log['user']->getCompany()->getId();
         
         $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
-        //print_r($url) ; exit; 
+        //print_r($url) ; exit;
         $rest = new RestTemplate();
         
-     
+        
+        $output = $rest->getData($url);
+               
+        $output = isset($output["WorkflowTypeList"]) ? $output["WorkflowTypeList"] : $output;
+        $output = isset($output["WorkflowTypeEdo"]) ? $output["WorkflowTypeEdo"] : $output;
+        //print_r($output) ; exit;
+        return $this->render('testreadlist',['types' => $output]);
+    }
+    
+    public function actionWorkflowtypes()
+    {
+        return $this->render('workflowtypes');
+    }
+    
+    public function actionLoadworkflowtypes()
+    {
+        header('Content-type: application/json');
+        $this->layout=false;
+        
+        $log=$_SESSION['logedInfo'];
+        $CompId=$log['user']->getCompany()->getId();
+        
+        $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
+        //print_r($url) ; exit;
+        $rest = new RestTemplate();
+        
+        
         $output = $rest->getData($url);
         
-        //print_r($output) ; exit; 
+        //print_r($output) ; exit;
         
-        $output = isset($output["item"]) ? $output["item"] : $output;
+        $output = isset($output["WorkflowTypeList"]) ? $output["WorkflowTypeList"] : $output;
+        $output = isset($output["WorkflowTypeEdo"]) ? $output["WorkflowTypeEdo"] : $output;
         
-        return $this->render('testreadlist',['types' => $output]);
+        echo json_encode($output);
+        exit;
+    
     }
 }
