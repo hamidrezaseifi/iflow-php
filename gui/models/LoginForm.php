@@ -76,20 +76,17 @@ class LoginForm extends Model
            //print_r($email) ; exit; 
             $url= "http://localhost:1020/profile/read/authinfo";
             $profile=$rest->postData($url, $email);
-            
-             print_r($profile) ; exit; 
-           
-          // $user = $rest->getData(\Yii::$app->params['services']['core']['urls']['readuserbyemail'] . $this->username);
-
-            if(is_array($request) && isset($request['companyId'])){
-               // $company = $rest->getData(\Yii::$app->params['services']['core']['urls']['companyinfo'] . $user['companyId']);
-                //print_r($company) ; exit; 
-                $user = ?;
-                $company = ?;
-                
-                $logedUser = new IdentityUser($user, $company, $output['token'], $output['sessionid']);
-                $_SESSION['logedInfo']['user'] = $logedUser;
-                return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
+            if(is_array($profile) && isset($profile["user"] )&& isset($profile["user"])){
+                $user=$profile["user"];
+                $company=$profile["company"];
+               // print_r($company) ; exit;
+                if(is_array($company) && is_array($user)){
+                   
+                    
+                    $logedUser = new IdentityUser($user, $company, $output['token'], $output['sessionid']);
+                    $_SESSION['logedInfo']['user'] = $logedUser;
+                    return Yii::$app->user->login($logedUser, \Yii::$app->params['loginSettings']['sessionTimeOut']);
+                }
             }
             
         }
