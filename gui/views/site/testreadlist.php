@@ -43,7 +43,7 @@ echo '<hr>';
   <option selected="selected" value="0">Choose one</option>
   <?php
   foreach($types as  $idx => $type) { ?>
-      <option value="<?= $type['id'] ?>"><?= $type['title'] ?></option>
+      <option value="<?= $type['ID'] ?>"><?= $type['Title'] ?></option>
   <?php
     } ?>
 </select>   

@@ -163,11 +163,10 @@ class SiteController extends Controller
         
         
         $output = $rest->getData($url);
-        
+               
+        $output = isset($output["WorkflowTypeList"]) ? $output["WorkflowTypeList"] : $output;
+        $output = isset($output["WorkflowTypeEdo"]) ? $output["WorkflowTypeEdo"] : $output;
         //print_r($output) ; exit;
-        
-        $output = isset($output["item"]) ? $output["item"] : $output;
-        
         return $this->render('testreadlist',['types' => $output]);
     }
     
@@ -193,7 +192,8 @@ class SiteController extends Controller
         
         //print_r($output) ; exit;
         
-        $output = isset($output["item"]) ? $output["item"] : $output;
+        $output = isset($output["WorkflowTypeList"]) ? $output["WorkflowTypeList"] : $output;
+        $output = isset($output["WorkflowTypeEdo"]) ? $output["WorkflowTypeEdo"] : $output;
         
         echo json_encode($output);
         exit;
