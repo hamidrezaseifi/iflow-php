@@ -57,12 +57,13 @@ class RestTemplate
     private function prepareHeader($isPost, $jsonData) {
         
         $token = 'not-logged';
-        if(isset($_SESSION['logedInfo']) && isset($_SESSION['logedInfo']['user'])){
-            $logged = $_SESSION['logedInfo']['user'];
-            $token = $logged->getAccessToken();
+        if(isset($_SESSION['logedInfo']) && isset($_SESSION['logedInfo']['token'])){
+            
+            $token = $_SESSION['logedInfo']['token'];
+            
         }
         
-        $header = array('IFLOW-CLIENT-ID: iflow-inner-module', 'iftkid: ' . $token, );
+        $header = array('iftkid: ' . $token, );
         
         if($isPost){
             $header = array_merge($header, array('Content-Type: application/json', "Content-length: ".strlen($jsonData)));
