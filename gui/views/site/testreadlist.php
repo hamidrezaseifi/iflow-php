@@ -39,5 +39,12 @@ echo '<hr>';
 
 
 ?>
-   
+ <select >
+  <option selected="selected" value="0">Choose one</option>
+  <?php
+  foreach($types as  $idx => $type) { ?>
+      <option value="<?= $type['id'] ?>"><?= $type['title'] ?></option>
+  <?php
+    } ?>
+</select>   
 </div>
