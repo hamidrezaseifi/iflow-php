@@ -3,10 +3,23 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
+use app\models\ContactForm;
+use app\modules\TestModel;
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;
 
+
+
+$cform = new TestModel();
+
+$cform->Body ="bodyyyyyy";
+$cform->Name ="namemmmmm";
+$cform->Email ="emailllllll";
+$cform->Subject ="subjecttttttttttt";
+
+
+print $cform->renderToXml();
 
 ?>
 <div class="site-about">
