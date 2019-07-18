@@ -39,9 +39,14 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'Workflow Types', 'url' => ['/site/workflowtypes']],
-            ['label' => 'TestReadList', 'url' => ['/site/testreadlist']],
-            ['label' => 'Test', 'url' => ['/site/test']],
+           
+            ['label' => 'Workflow','items' => [
+                ['label' => 'Workflow Types', 'url' => ['/workflow/workflowtypes']],
+                ['label' => 'TestReadList', 'url' => ['/workflow/testreadlist']],
+                ['label' => 'New Workflow', 'url' => ['/workflow/create']],
+            ],
+            ],
+            
              ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
