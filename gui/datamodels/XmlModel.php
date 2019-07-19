@@ -5,7 +5,7 @@ use yii\base\Model;
 
 class XmlModel extends Model
 {
-    function array_to_xml( &$xml_data ) {
+    private function array_to_xml( &$xml_data ) {
         
         
         foreach( $this->attributes as $key => $value ) {
@@ -19,7 +19,7 @@ class XmlModel extends Model
         }
     }
     
-    function renderToXml(){
+    public function renderToXml(){
         
         
         $modelName = $this->getClassName();
@@ -35,9 +35,46 @@ class XmlModel extends Model
         return $result;
     }
     
-    function getClassName(){
+    private function getClassName(){
         $path = explode('\\', get_class($this));
         return array_pop($path);
+    }
+    
+    public function renderToJson(){
+        
+        $result = [];
+        
+        foreach( $this->attributes as $key => $value ) {
+            
+            if(method_exists ($value, 'renderToJson')){
+                $result[$key] = $value->renderToJson();
+            } 
+            else {
+                if(is_array($value)){
+                    $result[$key] = XmlModel::renderArrayToJson($value);
+                }
+                else {
+                    $result[$key] = $value;
+                }
+            }
+            
+            
+            
+        }
+        
+        return $result;
+    }
+    
+    
+    public static function renderArrayToJson($list){
+        
+        $result = [];
+        foreach( $list as $item ) {
+            
+            $result[] = $item->renderToJson();
+        }
+        
+        return $result;
     }
     
     

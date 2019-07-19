@@ -40,7 +40,9 @@ $this->registerJsFile('@web/web/js/workflowtypes.js');
     			<td>{{item.SendToController}}</td>
     			<td>{{item.ManualAssign}}</td>
     			<td>{{item.IncreaseStepAutomatic}}</td>
-    			<td>{{item.Stepa}}</td>
+    			<td>
+    				<span ng-repeat="step in item.StepList">{{step.Title}} ,</span>
+    			</td>
     		</tr>
      		
     	
@@ -48,7 +50,7 @@ $this->registerJsFile('@web/web/js/workflowtypes.js');
     </table>
     
     <script type="text/javascript">
-		var loadUrl = "<?php echo Yii::getAlias("@web"). "/site/loadworkflowtypes";?>";
+		var loadUrl = "<?php echo Yii::getAlias("@web"). "/workflow/loadworkflowtypes";?>";
     </script>
     
 </div>

@@ -25,7 +25,7 @@ iflowApp.controller('WorkflowTypesController', function WorkflowTypesController(
 	        url : $scope.loadUrl,
 	    }).then(function successCallback(response) {
 	    	
-	    	
+	    	console.log(response.data);
 	    	$scope.items = response.data;
 	    	
 

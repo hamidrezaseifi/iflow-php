@@ -16,8 +16,8 @@ $this->registerCssFile('@web/web/css/table.css');
 
 function findDepartment($departmenlist, $id){
     foreach($departmenlist as $depart){
-        if($depart->getID() == $id){
-            return $depart->getTitle();
+        if($depart->ID == $id){
+            return $depart->Title;
         }
         
     }
@@ -53,7 +53,7 @@ function findDepartment($departmenlist, $id){
       <option selected="selected" value="0">Choose one</option>
   <?php
   foreach($workflowTypes as  $type) { ?>
-      <option value="<?= $type->getID() ?>"><?= $type->getTitle() ?></option>
+      <option value="<?= $type->ID ?>"><?= $type->Title ?></option>
   <?php
     } ?>
     </select> 

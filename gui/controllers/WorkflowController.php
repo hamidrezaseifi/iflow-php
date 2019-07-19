@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\modules\RestTemplate;
 use app\modules\BaseDataManager;
+use app\datamodels\WorkflowType;
 
 
 
@@ -77,20 +78,9 @@ class WorkflowController extends Controller
     public function actionTestreadlist()
     {
         
-        $log=$_SESSION['logedInfo'];
-        $CompId=$log['user']->getCompany()->getId();
-        
-        $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
-        //print_r($url) ; exit;
-        $rest = new RestTemplate();
-        
-        
-        $output = $rest->getData($url);
-               
-        $output = isset($output["WorkflowTypeList"]) ? $output["WorkflowTypeList"] : $output;
-        $output = isset($output["WorkflowTypeEdo"]) ? $output["WorkflowTypeEdo"] : $output;
+        $workflowTypes = BaseDataManager::getWorkflowTypes();
         //print_r($output) ; exit;
-        return $this->render('testreadlist',['types' => $output]);
+        return $this->render('testreadlist',['types' => $workflowTypes]);
     }
     
     public function actionWorkflowtypes()
@@ -124,22 +114,12 @@ class WorkflowController extends Controller
         header('Content-type: application/json');
         $this->layout=false;
         
-        $log=$_SESSION['logedInfo'];
-        $CompId=$log['user']->getCompany()->getId();
         
-        $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
-        //print_r($url) ; exit;
-        $rest = new RestTemplate();
+        $workflowTypes = BaseDataManager::getWorkflowTypes();
+        $workflowTypes = WorkflowType::renderArrayToJson($workflowTypes);
+        //print_r($workflowTypes);
         
-        
-        $output = $rest->getData($url);
-        
-        //print_r($output) ; exit;
-        
-        $output = isset($output["WorkflowTypeList"]) ? $output["WorkflowTypeList"] : $output;
-        $output = isset($output["WorkflowTypeEdo"]) ? $output["WorkflowTypeEdo"] : $output;
-        
-        echo json_encode($output);
+        echo json_encode($workflowTypes);
         exit;
     
     }
