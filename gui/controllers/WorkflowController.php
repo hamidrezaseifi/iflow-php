@@ -5,12 +5,9 @@ namespace app\controllers;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
-use yii\web\Response;
 use yii\filters\VerbFilter;
-use app\models\LoginForm;
-use app\models\ContactForm;
 use app\modules\RestTemplate;
-use yii\debug\models\search\Profile;
+use app\modules\BaseDataManager;
 
 
 
@@ -106,26 +103,19 @@ class WorkflowController extends Controller
         $log=$_SESSION['logedInfo'];
         $CompId=$log['user']->getCompany()->getId();
         
-        $url = \Yii::$app->params['services']['workflow']['urls']['workflowtype-list'].$CompId;
         $userurl = \Yii::$app->params['services']['profile']['urls']['user-list'].$CompId;
-        $departmenturl = \Yii::$app->params['services']['profile']['urls']['department-list'].$CompId;
-        //print_r($departmenturl) ; exit;
+        
         $rest = new RestTemplate();
               
-        $WorkflowType = $rest->getData($url);
-        $department = $rest->getData($departmenturl);
-        $department = $department['DepartmentList']['DepartmentEdo'];
-        //print_r($department) ; exit;
+        $workflowTypes = BaseDataManager::getWorkflowTypes();
+        //print_r($workflowTypes) ; exit;
+        $departments = BaseDataManager::getDepartments();        
+        //print_r($departments) ; exit;
         
         $user = $rest->getData($userurl);
-        $user = $user['UserList']['UserEdo'];
+        $user = $user['UserList']['User'];
          
-        //print_r($user) ; exit;
-        
-        $WorkflowType = isset($WorkflowType["WorkflowTypeList"]) ? $WorkflowType["WorkflowTypeList"] : $WorkflowType;
-        $WorkflowType = isset($WorkflowType["WorkflowTypeEdo"]) ? $WorkflowType["WorkflowTypeEdo"] : $WorkflowType;
-        //print_r($output) ; exit;
-        return $this->render('create',['types' => $WorkflowType, 'users' => $user ,'departments'=>$department]);
+        return $this->render('create',['workflowTypes' => $workflowTypes, 'users' => $user ,'departments'=>$departments]);
        
     }
     

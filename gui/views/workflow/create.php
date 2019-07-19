@@ -1,6 +1,9 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $departments array */
+/* @var $users array */
+/* @var $workflowTypes array */
 
 use yii\helpers\Html;
 
@@ -13,13 +16,14 @@ $this->registerCssFile('@web/web/css/table.css');
 
 function findDepartment($departmenlist, $id){
     foreach($departmenlist as $depart){
-        if($depart["ID"]==$id){
-            return $depart["Title"];
+        if($depart->getID() == $id){
+            return $depart->getTitle();
         }
         
     }
     return "not found";
 }
+
 ?>
 <style>
 
@@ -41,15 +45,15 @@ function findDepartment($departmenlist, $id){
 }
 
 </style>
-<div>
+
 <form class="form-horizontal" action="">
 <div class="form-group">
    <label for="wftype">Workflow type:</label>
    <select >
       <option selected="selected" value="0">Choose one</option>
   <?php
-  foreach($types as  $idx => $type) { ?>
-      <option value="<?= $type['ID'] ?>"><?= $type['Title'] ?></option>
+  foreach($workflowTypes as  $type) { ?>
+      <option value="<?= $type->getID() ?>"><?= $type->getTitle() ?></option>
   <?php
     } ?>
     </select> 

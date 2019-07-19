@@ -3,8 +3,7 @@
 /* @var $this yii\web\View */
 
 use yii\helpers\Html;
-use app\models\ContactForm;
-use app\modules\TestModel;
+use app\datamodels\TestModel;
 
 $this->title = 'Test';
 $this->params['breadcrumbs'][] = $this->title;

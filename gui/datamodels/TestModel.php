@@ -1,8 +1,8 @@
 <?php
-namespace app\modules;
+namespace app\datamodels;
 
 
-class TestModel extends XmlModel
+class TestModel extends XmlModel 
 {
     public $Name;
     public $Email;
